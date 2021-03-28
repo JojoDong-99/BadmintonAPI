@@ -19,19 +19,5 @@ namespace MemberAPI.Data
         public DbSet<Member> Members { get; set; }
         public DbSet<Court> Courts { get; set; }
         public DbSet<Booking> Bookings { get; set; }
-        public static System.Collections.Specialized.NameValueCollection AppSettings { get; }
-
-        // configure the database to be used by this context
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            // badmintonConnection is the name of the key that
-            // contains the has the connection string as the value
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("badmintonConnection"));
-        }
     }
 }
