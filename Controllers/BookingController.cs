@@ -60,5 +60,13 @@ namespace MemberAPI.Controllers
             await _context.SaveChangesAsync();
             return entityEntry.Entity;
         }
+        
+        [HttpGet("member_id:{memberId}")]
+        public async Task<ActionResult<List<Booking>>> GetByMemberID(int memberId)
+        {
+            var bookings = await _context.Bookings.Where(b=> b.MemberId == memberId).ToListAsync();
+            
+            return bookings;
+        }
     }
 }
