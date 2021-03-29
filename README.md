@@ -5,7 +5,7 @@
 https://badmintonapi.azurewebsites.net/swagger/index.html
 
 ## Database Tables
-There database tables are created by migrating from [Member](./Models/Member.cs), [Court](./Models/Court.cs) and [Booking](/Models/Booking.cs) models with EntityFrameworkCore.
+There database tables are created by migrating from [Member](./Models/Member.cs), [Court](./Models/Court.cs) and [Booking](./Models/Booking.cs) models with EntityFrameworkCore.
 ### Member Table
 <img src="./docs/MembersTable.png" alt="" width="800px">
 
