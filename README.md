@@ -13,7 +13,7 @@ There database tables are created by migrating from [Member](./Models/Member.cs)
 <img src="./docs/CourtsTable.png" alt="" width="800px">
 
 ### Booking Table
-<img src="./docs/BookingsTable.png .png" alt="" width="800px">
+<img src="./docs/BookingsTable.png" alt="" width="800px">
 
 ## API
 
