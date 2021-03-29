@@ -43,17 +43,19 @@ namespace MemberAPI.Controllers
 
         [HttpPost]
         public async Task<ActionResult<Booking>> AddBooking(Booking booking)
-        {
+        { 
             var court = await _context.Courts.FindAsync(booking.CourtId);
             if (court.OpenTime.TimeOfDay > booking.StartTime.TimeOfDay || court.CloseTime.TimeOfDay < booking.EndTime.TimeOfDay) 
             {
-                return BadRequest("Time is not available");
+                return BadRequest("The chosen time is not business hours");
             }
-            var overlappingBookings = await _context.Bookings.Where(b => b.EndTime > booking.StartTime
-                                                                   || b.StartTime < booking.EndTime).AnyAsync();
-            if (overlappingBookings)
+            
+            var overlappingBookings = await _context.Bookings.Where(b=> b.CourtId==booking.CourtId)
+                .Where(b => b.StartTime > booking.StartTime && b.StartTime < booking.EndTime || b.EndTime > booking.StartTime && b.EndTime < booking.EndTime).ToListAsync();
+            
+            if (overlappingBookings.Any())
             {
-                return BadRequest("Time is not available");
+                return BadRequest("The time has been booked");
             }
             
             var entityEntry = _context.Bookings.Add(booking);
@@ -65,6 +67,14 @@ namespace MemberAPI.Controllers
         public async Task<ActionResult<List<Booking>>> GetByMemberID(int memberId)
         {
             var bookings = await _context.Bookings.Where(b=> b.MemberId == memberId).ToListAsync();
+            
+            return bookings;
+        }
+        
+        [HttpGet("court_id:{courtId}")]
+        public async Task<ActionResult<List<Booking>>> GetByCourtID(int courtId)
+        {
+            var bookings = await _context.Bookings.Where(b=> b.CourtId == courtId).ToListAsync();
             
             return bookings;
         }
